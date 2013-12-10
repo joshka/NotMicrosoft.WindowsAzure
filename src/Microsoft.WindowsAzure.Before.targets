@@ -1,0 +1,11 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>	
+    <ServiceHostingSDKInstallDir>$(MSBuildThisFileDirectory)\..\..\Windows Azure SDK\</ServiceHostingSDKInstallDir>
+
+    <!-- Same publish location as used by previous Azure SDK versions -->
+    <PublishDir Condition=" '$(PublishDir)' == '' And '$(OutDir)' != '' ">$(OutDir)Publish</PublishDir>
+    <CloudExtensionsTaskPath  Condition=" '$(CloudExtensionsTaskPath)' == '' ">..\..\$(CloudExtensionsDir)Microsoft.VisualStudio.WindowsAzure.Tasks.$(CloudToolsVersion).dll</CloudExtensionsTaskPath>
+  </PropertyGroup>
+  
+</Project>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Package" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <OutDir Condition="'$(OutDir)'==''">$(MSBuildProjectDirectory)\output\</OutDir>
+    <GatherDir Condition="'$(GatherDir)'==''">$(MSBuildProjectDirectory)\gather\</GatherDir>
+    <NugetTool>$(MSBuildProjectDirectory)\nuget\nuget.exe</NugetTool>
+    <AzureVersion>2.2</AzureVersion>
+  </PropertyGroup>
+
+  <Target Name="Clean">
+    <RemoveDir Directories="$(OutDir);$(GatherDir)" />
+  </Target>
+
+  <Target Name="Gather">
+
+    <PropertyGroup>
+      <AzureToolsPath>$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v12.0\Windows Azure Tools\2.2</AzureToolsPath>
+
+      <ServiceHostingSDKRegistryKey>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft SDKs\ServiceHosting\v$(AzureVersion)</ServiceHostingSDKRegistryKey>
+      <ServiceHostingSDKInstallDir>$([MSBuild]::GetRegistryValueFromView('$(ServiceHostingSDKRegistryKey)', 'InstallPath', null, RegistryView.Registry32))</ServiceHostingSDKInstallDir>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <SdkFiles Include="$(ServiceHostingSDKInstallDir)\**\*.*" />
+      <AzureToolsFiles Include="$(AzureToolsPath)\**\*.*" />
+      <PackageToolsFiles Include="$(MSBuildProjectDirectory)\src\*install.ps1" />
+      <PackageToolsFiles Include="$(MSBuildProjectDirectory)\src\*.nuget.targets" />
+    </ItemGroup>
+
+    <Error Condition="'@(AzureToolsFiles)' == ''"
+       Text="Ensure Azure SDK is installed. Files missing: $(AzureToolsPath)" />
+
+    <Error Condition="'@(SdkFiles)' == ''"
+           Text="Ensure Azure SDK is installed. Files missing: $(ServiceHostingSDKInstallDir)" />
+
+    <MakeDir Directories="$(GatherDir)\Microsoft.Common.targets\ImportAfter" />
+    <MakeDir Directories="$(GatherDir)\Windows Azure Tools\ImportBefore" />
+    <MakeDir Directories="$(GatherDir)\Windows Azure Tools\ImportAfter" />
+    <MakeDir Directories="$(GatherDir)\Windows Azure SDK" />
+    <MakeDir Directories="$(GatherDir)\tools" />
+    <MakeDir Directories="$(GatherDir)\content" />
+
+    <Copy SourceFiles="$(CommonTargetsImportAfterPath)" 
+          DestinationFolder="$(GatherDir)\Microsoft.Common.targets\ImportAfter" 
+          SkipUnchangedFiles="true" />
+
+    <Copy SourceFiles="@(AzureToolsFiles)"
+          DestinationFolder="$(GatherDir)\Windows Azure Tools\%(RecursiveDir)"
+          SkipUnchangedFiles="true" />
+
+    <Copy SourceFiles="@(SdkFiles)"
+          DestinationFolder="$(GatherDir)\Windows Azure SDK\%(RecursiveDir)"
+          SkipUnchangedFiles="true" />
+
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\src\Microsoft.WindowsAzure.Before.targets"
+          DestinationFolder="$(GatherDir)\Windows Azure Tools\ImportBefore"
+          SkipUnchangedFiles="true" />
+
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\src\Microsoft.WindowsAzure.After.targets"
+          DestinationFolder="$(GatherDir)\Windows Azure Tools\ImportAfter"
+          SkipUnchangedFiles="true" />
+
+    <Copy SourceFiles="@(AzureToolsFiles)"
+          DestinationFolder="$(GatherDir)\Windows Azure Tools\%(RecursiveDir)"
+          SkipUnchangedFiles="true" />
+
+    <Copy SourceFiles="@(PackageToolsFiles)"
+          DestinationFolder="$(GatherDir)\tools"
+          SkipUnchangedFiles="true" />
+
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\src\Microsoft.WindowsAzure.Readme.txt"
+          DestinationFolder="$(GatherDir)\content"
+          SkipUnchangedFiles="true" />
+
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\src\Microsoft.WindowsAzure.nuspec"
+          DestinationFolder="$(GatherDir)"
+          SkipUnchangedFiles="true" />
+
+  </Target>
+
+  <Target Name="Package" DependsOnTargets="Gather">
+    <MakeDir Directories="$(OutDir)" />
+    <Exec Command="$(NugetTool) pack $(GatherDir)\Microsoft.WindowsAzure.nuspec -OutputDirectory $(OutDir) -NoPackageAnalysis -NoDefaultExcludes" />
+  </Target>
+
+</Project>

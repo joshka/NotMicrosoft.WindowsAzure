@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.WindowsAzure</id>
+    <version>2.2</version>
+    <title>Windows Azure</title>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <licenseUrl>https://www.windowsazure.com/en-us/develop/net/</licenseUrl>
+    <projectUrl>https://www.windowsazure.com/en-us/develop/net/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Avoid installing the Windows Azure SDK on the build server.</summary>
+    <description>Avoid installing the Windows Azure SDK on the build server.</description>
+    <tags>Azure</tags>
+  </metadata>
+</package>
