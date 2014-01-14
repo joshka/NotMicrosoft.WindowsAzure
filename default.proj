@@ -69,7 +69,7 @@
           DestinationFolder="$(GatherDir)\tools"
           SkipUnchangedFiles="true" />
 
-    <Copy SourceFiles="$(MSBuildProjectDirectory)\src\NotMicrosoft.WindowsAzure.Readme.txt"
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\Readme.txt"
           DestinationFolder="$(GatherDir)\content"
           SkipUnchangedFiles="true" />
 
