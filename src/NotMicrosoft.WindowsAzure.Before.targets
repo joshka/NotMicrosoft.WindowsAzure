@@ -5,7 +5,6 @@
 
     <!-- Same publish location as used by previous Azure SDK versions -->
     <PublishDir Condition=" '$(PublishDir)' == '' And '$(OutDir)' != '' ">$(OutDir)Publish</PublishDir>
-    <CloudExtensionsTaskPath  Condition=" '$(CloudExtensionsTaskPath)' == '' ">..\..\$(CloudExtensionsDir)Microsoft.VisualStudio.WindowsAzure.Tasks.$(CloudToolsVersion).dll</CloudExtensionsTaskPath>
   </PropertyGroup>
   
 </Project>

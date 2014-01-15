@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>NotMicrosoft.WindowsAzure</id>
-    <version>2.2.1</version>
+    <version>2.2.2</version>
     <title>Windows Azure Build Components</title>
     <authors>joshka,TienPhan,jstangroome</authors>
     <owners>joshka,TienPhan,jstangroome</owners>
@@ -10,13 +10,13 @@
     <projectUrl>https://github.com/joshka/NotMicrosoft.WindowsAzure/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>Unofficial Windows Azure SDK package.</summary>
-    <description>
-        This library allows you to install the WindowsAzure SDK in a fashion
-        that allows a build server to easily use the tools and dlls directly.
-        It is based on a blog post and associated source code by Jason
-        Stangroome.
+    <description>This package allows you to install the WindowsAzure SDK in a fashion that allows a build server to easily use the tools and dlls directly.
+        It is based on a blog post and associated source code by Jason Stangroome.
     </description>
     <tags>Azure</tags>
-    <releaseNotes>Updated for Windows Azure 2.2</releaseNotes>
+    <releaseNotes>
+        v2.2.2 - Fix CloudExtensionsTaskPath to point at correct location
+        v2.2.1 - Updated for Windows Azure 2.2
+    </releaseNotes>
   </metadata>
 </package>

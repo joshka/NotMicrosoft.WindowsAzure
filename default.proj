@@ -25,7 +25,7 @@
       <SdkFiles Include="$(ServiceHostingSDKInstallDir)\**\*.*" />
       <AzureToolsFiles Include="$(AzureToolsPath)\**\*.*" />
       <PackageToolsFiles Include="$(MSBuildProjectDirectory)\src\*install.ps1" />
-      <PackageToolsFiles Include="$(MSBuildProjectDirectory)\src\*.nuget.targets" />
+      <PackageToolsFiles Include="$(MSBuildProjectDirectory)\src\NotMicrosoft.WindowsAzure.props" />
     </ItemGroup>
 
     <Error Condition="'@(AzureToolsFiles)' == ''"
